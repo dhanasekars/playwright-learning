@@ -1,8 +1,8 @@
 import { Locator, Page } from "@playwright/test";
+import { HelperBase } from "./helperBase";
 
-export class NavigationPage{
+export class NavigationPage extends HelperBase{
 
-    private readonly page:Page
     // Playwright recommends to have locator seprated from the methods
     // So don't need to duplicate locators across methods.
     readonly formLayoutsMenuItem: Locator
@@ -12,7 +12,7 @@ export class NavigationPage{
     readonly tooltipMenuItem: Locator
 
     constructor(page:Page){
-        this.page = page
+        super(page)
         this.formLayoutsMenuItem = page.getByText('Form Layouts')
         this.datePickerMenuItem = page.getByText('Datepicker')
         this.smartTableMenuItem =page.getByText('Smart Table') 
@@ -27,6 +27,7 @@ export class NavigationPage{
         // But this make things complex because - anti KISS pattern
         // await this.page.getByText('Form Layouts').click() // not this
         await this.formLayoutsMenuItem.click() // but like this
+        await this.waitForNumberOfSeconds(2) // usage of wait from helperbase 
     }
 
 
