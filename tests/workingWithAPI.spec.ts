@@ -9,11 +9,12 @@ test.beforeEach(async({page})=>{
     })
 
     await page.goto('https://conduit.bondaracademy.com/')
- 
+    // await page.waitForTimeout(500)
 })
 
 test('has title', async({page})=>{
     await page.route('*/**/api/articles*', async route =>{
+        
         const response = await route.fetch()
         const responseBody = await response.json()
         responseBody.articles[0].title = "This is MOCK test title."
